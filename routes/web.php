@@ -70,6 +70,9 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::name('excel-test')->get('/test-excel', function () {
+    return view('excel');
+});
 Route::name('excel')->get('/excel', 'ExcelController@excel');
 Route::name('excel-view')->get('/excel-view', 'ExcelController@excelView');
 Route::name('excel-array')->get('/excel-from-array', 'ExcelController@exportExcelFromArray');

@@ -9,6 +9,7 @@ use Maatwebsite\Excel\Concerns\FromView;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\Exportable;
 
 class ExcelService
 {
@@ -82,6 +83,21 @@ class ExcelService
         $export->viewPath = $viewPath;
         $export->data = $data;
         return Excel::download($export, $this->getFileName($filename, $extension), ucfirst($extension));
+    }
+
+    private function exportDownloadFromQueue($query, $filename = null, $extension = 'xlsx')
+    {
+        // Create excel file from query
+        $export = new class implements FromQuery {
+            use Exportable;
+            public $query;
+            public function query(): array
+            {
+                return $this->query;
+            }
+        };
+        $export->query = $query;
+        return $export->queue($this->getFileName($filename, $extension));
     }
 
     private function getFileName($filename, $extension)
