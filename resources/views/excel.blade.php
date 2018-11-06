@@ -11,7 +11,7 @@
     $(function () {
         $(document).on('click', '.download', function (e) {
             e.preventDefault();
-            window.location.href = "{{ route('excel-view') }}";
+            window.location.href = "{{ route('excel') }}";
         });
     });
 </script>

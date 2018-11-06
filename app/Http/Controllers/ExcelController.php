@@ -11,13 +11,19 @@ use Maatwebsite\Excel\Concerns\FromCollection;
 
 class ExcelController extends Controller
 {
+    public function downloadExcel()
+    {
+        return view('excel');
+    }
+
     public function excel(ExcelService $excelService)
     {
         $data = [
-            ['name' => 'Jhp Phich1', 'age' => 30],
-            ['name' => 'Jhp Phich2', 'age' => 31],
-            ['name' => 'Jhp Phich3', 'age' => 32],
+            ['name' => 'Jhp Phich1', 'age' => 30, 'sex' => 1],
+            ['name' => 'Jhp Phich2', 'age' => 31, 'sex' => 0],
+            ['name' => 'Jhp Phich3', 'age' => 32, 'sex' => 1],
         ];
+        $excelService->headings = ['Name', 'Age', 'Sex'];
         return $excelService->exportDownload($data, 'testing', 'xlsx');
     }
 
